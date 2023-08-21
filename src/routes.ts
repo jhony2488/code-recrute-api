@@ -33,7 +33,7 @@ router.get('/vacancies', authentication, GetVacancies);
 router.post('/vacancies', authenticationWithTokenLogin, SetVacancies);
 router.put('/vacancies/:id', authenticationWithTokenLogin,UpdatedVacancies);
 router.patch('/vacancies/:id', authenticationWithTokenLogin,UpdatedVacancies);
-router.delete('/notesAndCoins/:id', authenticationWithTokenLogin, DeleteVacancies);
+router.delete('/vacancies/:id', authenticationWithTokenLogin, DeleteVacancies);
 
 
 export default router;
