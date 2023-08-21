@@ -1,0 +1,1527 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "api-desafio-flow-driver",
+    "description": ""
+  },
+  "host": "localhost:80",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Default",
+      "description": "Endpoints of default endpoints"
+    },
+    {
+      "name": "Clients",
+      "description": "Endpoints of client"
+    },
+    {
+      "name": "ClientsLogs",
+      "description": "Endpoints of logs client"
+    },
+    {
+      "name": "Vehicles",
+      "description": "Endpoints of type vehicles"
+    },
+    {
+      "name": "UserVehiclesTypes",
+      "description": "Endpoints of relacionamento entre clientes e tipos de carros"
+    },
+    {
+      "name": "NotesAndCoins",
+      "description": "Endpoints of notes and coins"
+    }
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "auth-token",
+      "in": "header"
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "Default"
+        ],
+        "description": "Endpoint default para obter dados versão da API",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Pegar dados da versão da API",
+            "schema": {
+              "$ref": "#/definitions/DefaultIndex"
+            }
+          },
+          "400": {
+            "description": "Quando houver um erro na requisição",
+            "schema": {
+              "$ref": "#/definitions/Error400"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorTokenInvalid"
+            },
+            "description": "Quando o token de authenticação não for valido ou quando o token de authenticação não for encontrado"
+          }
+        }
+      }
+    },
+    "/clients": {
+      "get": {
+        "tags": [
+          "Clients"
+        ],
+        "description": "Endpoint para obter dados de clientes",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pegar dados de clientes",
+            "schema": {
+              "$ref": "#/definitions/GetClients"
+            }
+          },
+          "400": {
+            "description": "Quando houver um erro na requisição",
+            "schema": {
+              "$ref": "#/definitions/Error400"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorTokenInvalid"
+            },
+            "description": "Quando o token de authenticação não for valido ou quando o token de authenticação não for encontrado"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Clients"
+        ],
+        "description": "Endpoint para criar cliente",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Dado necessario para criar um cliente",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SetClient"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Novo cliente criado ",
+            "schema": {
+              "$ref": "#/definitions/MessageSetClient"
+            }
+          },
+          "400": {
+            "description": "Quando houver um erro na requisição",
+            "schema": {
+              "$ref": "#/definitions/Error400"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorTokenInvalid"
+            },
+            "description": "Quando o token de authenticação não for valido ou quando o token de authenticação não for encontrado"
+          }
+        }
+      }
+    },
+    "/clients/{id}": {
+      "put": {
+        "tags": [
+          "Clients"
+        ],
+        "description": "Endpoint para atualizar cliente",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Dado necessario para atualizar um cliente",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateClient"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cliente atualizado ",
+            "schema": {
+              "$ref": "#/definitions/MessageUpdateClient"
+            }
+          },
+          "400": {
+            "description": "Quando houver um erro na requisição",
+            "schema": {
+              "$ref": "#/definitions/Error400"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorTokenInvalid"
+            },
+            "description": "Quando o token de authenticação não for valido ou quando o token de authenticação não for encontrado"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Clients"
+        ],
+        "description": "Endpoint para deletar um cliente",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cliente deletado",
+            "schema": {
+              "$ref": "#/definitions/MessageDeleteClient"
+            }
+          },
+          "400": {
+            "description": "Quando houver um erro na requisição",
+            "schema": {
+              "$ref": "#/definitions/Error400"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorTokenInvalid"
+            },
+            "description": "Quando o token de authenticação não for valido ou quando o token de authenticação não for encontrado"
+          }
+        }
+      }
+    },
+    "/notesAndCoins": {
+      "get": {
+        "tags": [
+          "NotesAndCoins"
+        ],
+        "description": "Endpoint para obter dados de notas e moedas",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Obtido os dados",
+            "schema": {
+              "$ref": "#/definitions/GetMoney"
+            }
+          },
+          "400": {
+            "description": "Quando houver um erro na requisição",
+            "schema": {
+              "$ref": "#/definitions/Error400"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorTokenInvalid"
+            },
+            "description": "Quando o token de authenticação não for valido ou quando o token de authenticação não for encontrado"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "NotesAndCoins"
+        ],
+        "description": "Endpoint para criar uma nova moeda ou nota(cedula)",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Dado necessario para criar moeda e nota(cedula)",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/setMoney"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Moeda/nota criada",
+            "schema": {
+              "$ref": "#/definitions/MessageSetMoney"
+            }
+          },
+          "400": {
+            "description": "Quando houver um erro na requisição",
+            "schema": {
+              "$ref": "#/definitions/Error400"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorTokenInvalid"
+            },
+            "description": "Quando o token de authenticação não for valido ou quando o token de authenticação não for encontrado"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "NotesAndCoins"
+        ],
+        "description": "Endpoint para atualizar varias moedas/notas",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Dado necessario para atualizar varias moedas/notas",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateCoins"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Notas atualizadas com sucesso",
+            "schema": {
+              "$ref": "#/definitions/MessageUpdateCoins"
+            }
+          },
+          "400": {
+            "description": "Quando houver um erro na requisição",
+            "schema": {
+              "$ref": "#/definitions/Error400"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorTokenInvalid"
+            },
+            "description": "Quando o token de authenticação não for valido ou quando o token de authenticação não for encontrado"
+          }
+        }
+      }
+    },
+    "/notesAndCoins/{id}": {
+      "put": {
+        "tags": [
+          "NotesAndCoins"
+        ],
+        "description": "Endpoint para atualizar uma nota",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Dado necessario para atualizar nota/moeda",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateMoney"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Nota atualizada",
+            "schema": {
+              "$ref": "#/definitions/MessageUpdateCoin"
+            }
+          },
+          "400": {
+            "description": "Quando houver um erro na requisição",
+            "schema": {
+              "$ref": "#/definitions/Error400"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorTokenInvalid"
+            },
+            "description": "Quando o token de authenticação não for valido ou quando o token de authenticação não for encontrado"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "NotesAndCoins"
+        ],
+        "description": "Endpoint para criar atualizar a quantidade de uma nota ou moeda",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Dado necessario para atualizar moedas/notas",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateAmountCoin"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Atualizado quantidade de moeda",
+            "schema": {
+              "$ref": "#/definitions/MessageUpdateAmountCoins"
+            }
+          },
+          "400": {
+            "description": "Quando houver um erro na requisição",
+            "schema": {
+              "$ref": "#/definitions/Error400"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorTokenInvalid"
+            },
+            "description": "Quando o token de authenticação não for valido ou quando o token de authenticação não for encontrado"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "NotesAndCoins"
+        ],
+        "description": "Endpoint para deletar uma moeda/nota",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Moeda/Nota Deletada",
+            "schema": {
+              "$ref": "#/definitions/MessageDeleteCoin"
+            }
+          },
+          "400": {
+            "description": "Quando houver um erro na requisição",
+            "schema": {
+              "$ref": "#/definitions/Error400"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorTokenInvalid"
+            },
+            "description": "Quando o token de authenticação não for valido ou quando o token de authenticação não for encontrado"
+          }
+        }
+      }
+    },
+    "/logsClients": {
+      "get": {
+        "tags": [
+          "ClientsLogs"
+        ],
+        "description": "Endpoint para pegar dados de clientes",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pegar dados de logs clientes",
+            "schema": {
+              "$ref": "#/definitions/GetLogs"
+            }
+          },
+          "400": {
+            "description": "Quando houver um erro na requisição",
+            "schema": {
+              "$ref": "#/definitions/Error400"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorTokenInvalid"
+            },
+            "description": "Quando o token de authenticação não for valido ou quando o token de authenticação não for encontrado"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ClientsLogs"
+        ],
+        "description": "Endpoint para criar log de cliente",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Dado necessario para criar novo log de cliente",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/setLogs"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Criar log de cliente",
+            "schema": {
+              "$ref": "#/definitions/MessageSetLog"
+            }
+          },
+          "400": {
+            "description": "Quando houver um erro na requisição",
+            "schema": {
+              "$ref": "#/definitions/Error400"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorTokenInvalid"
+            },
+            "description": "Quando o token de authenticação não for valido ou quando o token de authenticação não for encontrado"
+          }
+        }
+      }
+    },
+    "/logsClients/{id}": {
+      "put": {
+        "tags": [
+          "ClientsLogs"
+        ],
+        "description": "Endpoint para atualizar log de cliente",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Dado necessario para atualizar log de cliente",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateLogs"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Atualizar log de cliente",
+            "schema": {
+              "$ref": "#/definitions/MessageUpdateLog"
+            }
+          },
+          "400": {
+            "description": "Quando houver um erro na requisição",
+            "schema": {
+              "$ref": "#/definitions/Error400"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorTokenInvalid"
+            },
+            "description": "Quando o token de authenticação não for valido ou quando o token de authenticação não for encontrado"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ClientsLogs"
+        ],
+        "description": "Endpoint para deletar log de cliente",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deletar log de cliente",
+            "schema": {
+              "$ref": "#/definitions/DeleteLogMessage"
+            }
+          },
+          "400": {
+            "description": "Quando houver um erro na requisição",
+            "schema": {
+              "$ref": "#/definitions/Error400"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorTokenInvalid"
+            },
+            "description": "Quando o token de authenticação não for valido ou quando o token de authenticação não for encontrado"
+          }
+        }
+      }
+    },
+    "/vehicleType": {
+      "get": {
+        "tags": [
+          "Vehicles"
+        ],
+        "description": "Endpoint para obter dados de tipos de veiculos",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "clients",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Obtido os tipos de veiculos",
+            "schema": {
+              "$ref": "#/definitions/GetVehicles"
+            }
+          },
+          "400": {
+            "description": "Quando houver um erro na requisição",
+            "schema": {
+              "$ref": "#/definitions/Error400"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorTokenInvalid"
+            },
+            "description": "Quando o token de authenticação não for valido ou quando o token de authenticação não for encontrado"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Vehicles"
+        ],
+        "description": "Endpoint para criar um novo tipo de veiculo",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Dado necessario para criar um tipo de veiculo",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/setVehicles"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Veiculo criado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/MessageTypeVehicle"
+            }
+          },
+          "400": {
+            "description": "Quando houver um erro na requisição",
+            "schema": {
+              "$ref": "#/definitions/Error400"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorTokenInvalid"
+            },
+            "description": "Quando o token de authenticação não for valido ou quando o token de authenticação não for encontrado"
+          }
+        }
+      }
+    },
+    "/vehicleType/{id}": {
+      "put": {
+        "tags": [
+          "Vehicles"
+        ],
+        "description": "Endpoint para atualizar um tipo de veiculo",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Dado necessario para criar um tipo de veiculo",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/setVehicles"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Veiculo criado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/MessageUpdateVehicle"
+            }
+          },
+          "400": {
+            "description": "Quando houver um erro na requisição",
+            "schema": {
+              "$ref": "#/definitions/Error400"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorTokenInvalid"
+            },
+            "description": "Quando o token de authenticação não for valido ou quando o token de authenticação não for encontrado"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Vehicles"
+        ],
+        "description": "Endpoint para deletar um tipo de veiculo",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Veiculo deletado",
+            "schema": {
+              "$ref": "#/definitions/MessageDeleteVehicle"
+            }
+          },
+          "400": {
+            "description": "Quando houver um erro na requisição",
+            "schema": {
+              "$ref": "#/definitions/Error400"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorTokenInvalid"
+            },
+            "description": "Quando o token de authenticação não for valido ou quando o token de authenticação não for encontrado"
+          }
+        }
+      }
+    },
+    "/UservehicleType": {
+      "get": {
+        "tags": [
+          "UserVehiclesTypes"
+        ],
+        "description": "Endpoint para obter dados de tipos de veiculos relacionados a clientes",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Obtido os dados",
+            "schema": {
+              "$ref": "#/definitions/GetUserVehiclesType"
+            }
+          },
+          "400": {
+            "description": "Quando houver um erro na requisição",
+            "schema": {
+              "$ref": "#/definitions/Error400"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/ErrorTokenInvalid"
+            },
+            "description": "Quando o token de authenticação não for valido ou quando o token de authenticação não for encontrado"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Error400": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Descrição sobre o erro"
+        }
+      }
+    },
+    "Error406": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Descrição sobre o erro"
+        }
+      }
+    },
+    "Error403": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Descrição sobre o erro"
+        }
+      }
+    },
+    "ErrorTokenInvalid": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Token Invalid || Token not provided"
+        }
+      }
+    },
+    "DefaultIndex": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string",
+          "example": "1.0.0"
+        }
+      }
+    },
+    "GetClients": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number",
+                "example": 3
+              },
+              "plate": {
+                "type": "string",
+                "example": "jh46o36986-7897hjhih"
+              },
+              "VehicleTypeId": {
+                "type": "number",
+                "example": 1
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2023-05-30T21:26:53.935Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "example": "2023-05-30T21:26:53.935Z"
+              },
+              "logs": {
+                "type": "array",
+                "example": [],
+                "items": {}
+              },
+              "vehicleType": {
+                "type": "array",
+                "example": [],
+                "items": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "SetClient": {
+      "type": "object",
+      "properties": {
+        "plate": {
+          "type": "string",
+          "example": "j6o3698i6-7j897hhjkjh7ih"
+        },
+        "VehicleTypeId": {
+          "type": "number",
+          "example": 1
+        },
+        "LogClients": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "prohibited": {
+                "type": "string",
+                "example": "Tue May 30 2023 12:53:02 GMT-0300 (Horário Padrão de Brasília)"
+              },
+              "exit": {
+                "type": "string",
+                "example": ""
+              },
+              "price": {},
+              "paidOut": {
+                "type": "boolean",
+                "example": false
+              },
+              "changeValue": {},
+              "paidOutPrice": {},
+              "priceVehicle": {
+                "type": "number",
+                "example": 5
+              },
+              "idUser": {}
+            }
+          }
+        }
+      }
+    },
+    "UpdateClient": {
+      "type": "object",
+      "properties": {
+        "plate": {
+          "type": "string",
+          "example": "hh6-ghgh7"
+        },
+        "VehicleTypeId": {
+          "type": "number",
+          "example": 1
+        }
+      }
+    },
+    "MessageSetClient": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Client criado com sucesso"
+        },
+        "plate": {
+          "type": "string",
+          "example": "j6o3698i6-7j897hhjkjh7ih"
+        },
+        "VehicleTypeId": {
+          "type": "number",
+          "example": 1
+        },
+        "LogClients": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "prohibited": {
+                "type": "string",
+                "example": "Tue May 30 2023 12:53:02 GMT-0300 (Horário Padrão de Brasília)"
+              },
+              "exit": {
+                "type": "string",
+                "example": ""
+              },
+              "price": {},
+              "paidOut": {
+                "type": "boolean",
+                "example": false
+              },
+              "changeValue": {},
+              "paidOutPrice": {},
+              "priceVehicle": {
+                "type": "number",
+                "example": 5
+              },
+              "idUser": {}
+            }
+          }
+        }
+      }
+    },
+    "MessageUpdateClient": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Client atualizado com sucesso"
+        },
+        "plate": {
+          "type": "string",
+          "example": "hh6-ghgh7"
+        },
+        "VehicleTypeId": {
+          "type": "number",
+          "example": 1
+        }
+      }
+    },
+    "MessageDeleteClient": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Cliente deletado com sucesso"
+        }
+      }
+    },
+    "GetVehicles": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number",
+                "example": 3
+              },
+              "name": {
+                "type": "string",
+                "example": "Caminhão"
+              },
+              "value": {
+                "type": "number",
+                "example": 8
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2023-05-30T19:09:27.440Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "example": "2023-05-30T19:09:27.440Z"
+              }
+            }
+          }
+        }
+      }
+    },
+    "setVehicles": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Carro"
+        },
+        "value": {
+          "type": "number",
+          "example": 5
+        }
+      }
+    },
+    "MessageTypeVehicle": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Veiculo criada com sucesso"
+        },
+        "name": {
+          "type": "string",
+          "example": "Caminhão"
+        },
+        "value": {
+          "type": "number",
+          "example": 8
+        }
+      }
+    },
+    "MessageUpdateVehicle": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Veiculo atualizado com sucesso"
+        },
+        "name": {
+          "type": "string",
+          "example": "Carro"
+        },
+        "value": {
+          "type": "number",
+          "example": 5
+        }
+      }
+    },
+    "MessageDeleteVehicle": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Veiculo deletado com sucesso"
+        }
+      }
+    },
+    "GetMoney": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number",
+                "example": 4
+              },
+              "value": {
+                "type": "string",
+                "example": "10"
+              },
+              "amount": {
+                "type": "number",
+                "example": 0
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2023-05-30T21:23:24.683Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "example": "2023-05-30T21:31:14.898Z"
+              }
+            }
+          }
+        }
+      }
+    },
+    "setMoney": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string",
+          "example": "0.10"
+        },
+        "amount": {
+          "type": "number",
+          "example": 3
+        }
+      }
+    },
+    "MessageSetMoney": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Moedas/dinheiro criada com sucesso"
+        },
+        "amount": {
+          "type": "number",
+          "example": 3
+        },
+        "value": {
+          "type": "string",
+          "example": "0.10"
+        }
+      }
+    },
+    "UpdateCoins": {
+      "type": "object",
+      "properties": {
+        "amountsWithdrawn": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "example": "10"
+              },
+              "amount": {
+                "type": "number",
+                "example": -2
+              }
+            }
+          }
+        }
+      }
+    },
+    "UpdateMoney": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string",
+          "example": "2"
+        },
+        "amount": {
+          "type": "number",
+          "example": 100
+        }
+      }
+    },
+    "UpdateAmountCoin": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "number",
+          "example": 6
+        }
+      }
+    },
+    "MessageDeleteCoins": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Moeda deletado com sucesso"
+        }
+      }
+    },
+    "MessageUpdateAmountCoins": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Nota/Moeda atualizadas com sucesso"
+        },
+        "amount": {
+          "type": "number",
+          "example": 6
+        }
+      }
+    },
+    "MessageUpdateCoin": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Nota/Moeda atualizadas com sucesso"
+        },
+        "amount": {
+          "type": "number",
+          "example": 100
+        },
+        "value": {
+          "type": "string",
+          "example": "2"
+        }
+      }
+    },
+    "MessageUpdateCoins": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Notas atualizadas com sucesso"
+        }
+      }
+    },
+    "GetLogs": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number",
+                "example": 1
+              },
+              "prohibited": {
+                "type": "string",
+                "example": "Tue May 30 2023 12:53:02 GMT-0300 (Horário Padrão de Brasília)"
+              },
+              "exit": {
+                "type": "string",
+                "example": ""
+              },
+              "idUser": {
+                "type": "number",
+                "example": 1
+              },
+              "price": {},
+              "paidOut": {
+                "type": "boolean",
+                "example": false
+              },
+              "paidOutPrice": {},
+              "changeValue": {},
+              "priceVehicle": {},
+              "createdAt": {
+                "type": "string",
+                "example": "2023-05-30T21:22:34.558Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "example": "2023-05-30T21:22:34.558Z"
+              },
+              "client": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "number",
+                    "example": 1
+                  },
+                  "plate": {
+                    "type": "string",
+                    "example": "jh46o3686-7897hjhih"
+                  },
+                  "VehicleTypeId": {
+                    "type": "number",
+                    "example": 1
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "example": "2023-05-30T21:22:34.479Z"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "example": "2023-05-30T21:22:34.479Z"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "setLogs": {
+      "type": "object",
+      "properties": {
+        "prohibited": {
+          "type": "string",
+          "example": "Tue May 30 2023 12:53:02 GMT-0300 (Horário Padrão de Brasília)"
+        },
+        "exit": {
+          "type": "string",
+          "example": ""
+        },
+        "price": {},
+        "paidOut": {
+          "type": "boolean",
+          "example": false
+        },
+        "changeValue": {},
+        "paidOutPrice": {},
+        "priceVehicle": {
+          "type": "number",
+          "example": 5
+        },
+        "idUser": {
+          "type": "number",
+          "example": 6
+        }
+      }
+    },
+    "UpdateLogs": {
+      "type": "object",
+      "properties": {
+        "prohibited": {
+          "type": "string",
+          "example": "Tue May 30 2023 12:53:02 GMT-0300 (Horário Padrão de Brasília)"
+        },
+        "exit": {
+          "type": "string",
+          "example": "Tue May 30 2023 14:53:02 GMT-0300 (Horário Padrão de Brasília)"
+        },
+        "price": {},
+        "paidOut": {
+          "type": "boolean",
+          "example": true
+        },
+        "changeValue": {},
+        "paidOutPrice": {
+          "type": "number",
+          "example": 15
+        },
+        "priceVehicle": {
+          "type": "number",
+          "example": 5
+        },
+        "idUser": {
+          "type": "number",
+          "example": 10
+        }
+      }
+    },
+    "MessageSetLog": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Log de Cliente criado com sucesso"
+        },
+        "prohibited": {
+          "type": "string",
+          "example": "Tue May 30 2023 12:53:02 GMT-0300 (Horário Padrão de Brasília)"
+        },
+        "exit": {
+          "type": "string",
+          "example": ""
+        },
+        "price": {},
+        "paidOut": {
+          "type": "boolean",
+          "example": false
+        },
+        "changeValue": {},
+        "paidOutPrice": {},
+        "idUser": {
+          "type": "number",
+          "example": 6
+        }
+      }
+    },
+    "MessageUpdateLog": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Log de Cliente atualizado com sucesso"
+        },
+        "messageChange": {
+          "type": "string",
+          "example": "Não falta dinheiro"
+        },
+        "prohibited": {
+          "type": "string",
+          "example": "Tue May 30 2023 12:53:02 GMT-0300 (Horário Padrão de Brasília)"
+        },
+        "exit": {
+          "type": "string",
+          "example": "Tue May 30 2023 14:53:02 GMT-0300 (Horário Padrão de Brasília)"
+        },
+        "price": {
+          "type": "number",
+          "example": 10
+        },
+        "paidOut": {
+          "type": "boolean",
+          "example": true
+        },
+        "changeValue": {
+          "type": "object",
+          "properties": {
+            "changeValue": {
+              "type": "number",
+              "example": 5
+            },
+            "message": {
+              "type": "string",
+              "example": "Não falta dinheiro"
+            }
+          }
+        },
+        "paidOutPrice": {
+          "type": "number",
+          "example": 15
+        },
+        "idUser": {
+          "type": "number",
+          "example": 10
+        },
+        "changeValueNotas": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number",
+                "example": 0.1
+              },
+              "amount": {
+                "type": "number",
+                "example": 3
+              }
+            }
+          }
+        }
+      }
+    },
+    "DeleteLogMessage": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Log de Cliente deletado com sucesso"
+        }
+      }
+    },
+    "GetUserVehiclesType": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "userId": {
+                "type": "number",
+                "example": 1
+              },
+              "VehicleTypeId": {
+                "type": "number",
+                "example": 2
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2023-05-30T15:41:57.881Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "example": "2023-05-30T15:41:57.881Z"
+              },
+              "ClientId": {
+                "type": "number",
+                "example": 1
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
