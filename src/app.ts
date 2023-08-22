@@ -3,11 +3,15 @@ import * as redis from 'redis';
 import {useExpressApp} from './useApp';
 import {connectionDB} from './database/index';
 
+require('dotenv').config({
+  path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env',
+});
+
 export const app = express();
 
 export const redisClient = redis.createClient({
   socket: {
-    host: 'localhost',
+    host: process.env.REDIS_HOST || 'localhost',
     port: 6379,
 },
 });

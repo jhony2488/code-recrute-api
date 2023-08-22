@@ -9,6 +9,12 @@ const sequelize = new Sequelize(`${process.env.DB_NAME}`, `${process.env.DB_USER
   host: process.env.DB_HOST || 'db',
   port: parseInt(process.env.DB_PORT || '5432'),
   dialect: 'postgres',
+  dialectOptions: {
+    ssl: {
+      require: false,
+      rejectUnauthorized: false, // Importante para evitar erros de certificado
+    },
+  },
 });
 
 
