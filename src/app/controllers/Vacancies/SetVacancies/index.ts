@@ -28,7 +28,7 @@ async function SetVacancies(req: Request, res: Response) {
         } */
 
   try {
-    await Vacancies.upsert({
+    await Vacancies.create({
       title,
       description,
       requirement: requirement ? requirement : null,

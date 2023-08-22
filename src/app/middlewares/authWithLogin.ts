@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 async function auth(req: Request, res: Response, next: NextFunction) {
   const authHeader:string | undefined = req.header('Authorization');
-  const redisGetAsync = promisify(redisClient.get).bind(redisClient);
+  const redisGetAsync = await promisify(redisClient.get).bind(redisClient);
 
   if (!authHeader) {
     return res.status(401).json({ message: 'Token not provided' });
@@ -22,18 +22,19 @@ async function auth(req: Request, res: Response, next: NextFunction) {
 
   const token: string = req.header('Authorization') || '';
   const tokenUser: string = req.header('AuthorizationUser') || '';
-
+  console.log('jhonyyyy2')
     // Verificar se o token existe no Redis
     try {
-      const reply = await redisGetAsync(tokenUser);
-
+      console.log('jhonyyyy24')
+      const reply = await redisClient.get(tokenUser);
+      console.log('jhonyyyy245')
       if (!reply) {
         return res.status(401).json({ valid: false });
       }
     } catch (err) {
       return res.status(500).json({ error: 'Erro ao verificar o token.' });
     }
-
+console.log('jhonyyyy')
   const jwtApp = await jwt.sign(
     {
       token: 'Bearer ' + token,

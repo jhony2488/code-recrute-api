@@ -1,5 +1,5 @@
 <h1 align="center" id="app-tarefas">
-   App de estacionamento Back End
+  Code recrute Back End
 </h1>
 
 <h2 id="tabela-de-conteudo">Tabela de conteúdos</h2>
@@ -31,19 +31,6 @@
 
 - [Licença](#licença)
 <!--te-->
-
-<h2  id="features">  
-  Features
-</h2>
-
-- [x] Desenvolver e realizar os testes
-- [x] CRUD clientes
-- [x] CRUD log de clientes
-- [x] CRUD veiculos
-- [x] CRUD Notas e moedas
-- [x] Funcionalidade de gerar troco a partir de notas e moedas disponiveis e dar feedback em cima disso
-- [x] middleware de segurança da api
-- [x] Aplicado conteinerização com docker
 
 
 <h2>Como usar</h2>

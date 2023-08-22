@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import bcrypt from 'bcrypt';
 import { Users } from '../../../models';
 import {PropsUsersUpdated} from '../../../interfaces/users';
 
@@ -9,9 +8,8 @@ async function SetUsers(req: Request, res: Response) {
     password,
   }: PropsUsersUpdated = req.body;
 
-  const { id }: { id: number } = req.params;
+  const { id } = req.params;
 
-  const passwordHash = bcrypt.hash(password, 10, (err, hash) => hash);
   // #swagger.tags = ['Clients']
   // #swagger.description = 'Endpoint para criar um novo usuario'
   /*    #swagger.parameters['body'] = {
@@ -31,7 +29,7 @@ async function SetUsers(req: Request, res: Response) {
       await Users.update(
         {
           email,
-          password: passwordHash,
+          password
         },
         {
           where: {
@@ -53,7 +51,7 @@ async function SetUsers(req: Request, res: Response) {
     } else if (!email && password) {
       await Users.update(
         {
-          password: passwordHash,
+          password,
         },
         {
           where: {

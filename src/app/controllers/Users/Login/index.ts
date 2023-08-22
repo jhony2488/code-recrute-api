@@ -2,8 +2,8 @@
 import { Request, Response } from 'express';
 import { generateToken } from '../../../utils/generateToken';
 import { redisClient } from '../../../../app';
-import bcrypt from 'bcrypt';
 import { Users } from '../../../models';
+import {compareHashPassword} from '../../../utils/hashPassword';
 
 async function Login(req: Request, res: Response) {
   const { email, password } = req.body;
@@ -18,24 +18,21 @@ async function Login(req: Request, res: Response) {
 
   try {
     const result: any = await Users.findOne({
-      where: { email }
+      where: { email, password }
     });
-
+    console.log(result,email, password )
     if (result) {
-      const passwordHashCompare = bcrypt.compare(password, result.password, (err, result:boolean) => {
-        if(err){
-          return err;
-        }
-        return result;
-      });
-
-      if (passwordHashCompare) {
+              console.log('jhonyyy778')
         redisClient.set(token, token, { EX: 60 * 60 * 48 });
-      }
-      return res.json({
-        token
-      });
+        console.log('jhonyyy55')
+        return res.json({
+          token
+        });
     }
+
+    return res.json({
+      message: "Email ou senha incorreto"
+    });
 
     /* #swagger.responses[200] = {
              schema: { $ref: "#/definitions/SendMailResponse" },

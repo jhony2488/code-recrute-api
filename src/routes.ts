@@ -30,10 +30,10 @@ router.post('/login', authentication, LoginUser);
 
 //Vacancies
 router.get('/vacancies', authentication, GetVacancies);
-router.post('/vacancies', authenticationWithTokenLogin, SetVacancies);
-router.put('/vacancies/:id', authenticationWithTokenLogin,UpdatedVacancies);
-router.patch('/vacancies/:id', authenticationWithTokenLogin,UpdatedVacancies);
-router.delete('/vacancies/:id', authenticationWithTokenLogin, DeleteVacancies);
+router.post('/vacancies', authentication, SetVacancies);
+router.put('/vacancies/:id', authentication,UpdatedVacancies);
+router.patch('/vacancies/:id',authentication,UpdatedVacancies);
+router.delete('/vacancies/:id', authentication, DeleteVacancies);
 
 
 export default router;
